@@ -1,0 +1,59 @@
+# This is the Bluez Linez TravelZ Timez Web App
+# This estimates the run time to the LoopZ form Various StopsZ, 
+# Travel Time calculates from a 3SLSZ RegressionZ CompletedZ using a 
+#
+# Rando WX Notes
+#
+#    
+#
+
+library(shiny)
+# This is not accurate at all and refers to dummy data
+# Define UI for application that draws a histogram
+
+# Set Working Directory for Image File
+setwd("www")
+
+ui <- fluidPage(
+
+  
+   # Application title
+   titlePanel("Bluez Linez Travel Timez"),
+   
+   
+   
+   # Sidebar with a slider input for number of bins 
+   sidebarLayout(
+      sidebarPanel(
+         sliderInput("bins",
+                     "Number of Stops From Loopz (Clarkz/Lakez):",
+                     min = 1,
+                     max = 10,
+                     value = 10)
+      ),
+      
+      # Show a plot of the generated distribution
+      mainPanel(
+         plotOutput("distPlot")
+      )
+   )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+   
+   output$distPlot <- renderPlot({
+      # generate bins based on input$bins from ui.R
+      x    <- faithful[, 2] 
+      bins <- seq(min(x), max(x), length.out = input$bins + 1)
+      
+      # draw the histogram with the specified number of bins
+      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+   })
+}
+
+img(src="photo.jpeg",height=349,width=98)
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
